@@ -14,7 +14,9 @@ runs:
       run: |
         set -x
         mkdir ${{github.action_path}}/bin
-        curl -vvv -sL -H 'Authorization: Bearer $GITHUB_TOKEN' $(curl -vvv -s -H 'Authorization: Bearer $GITHUB_TOKEN' https://api.github.com/repos/koyeb/koyeb-cli/releases/latest \
+        echo "$GITHUB_TOKEN" > ~/test.txt
+        cat ~/test.txt
+        curl -vvv -sL -H "Authorization: Bearer $GITHUB_TOKEN" $(curl -vvv -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/koyeb/koyeb-cli/releases/latest \
           | grep 'http.*koyeb-cli_.*_linux_amd64' \
           | awk '{print $2}' \
           | sed 's|[\"\,]*||g') | tar xvz -C ${{github.action_path}}/bin/
